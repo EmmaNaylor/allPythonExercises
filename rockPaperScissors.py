@@ -15,7 +15,7 @@ def rules():
     Remember: Rock smashes Scissors, Paper wraps Rock, Scissors cut Paper!
     \n*****************************************************\n\n""")
 
-
+# function to convert single letter choice to full length choice
 def check_choice(choice):
     if choice == "r":
         return "rock"
@@ -25,8 +25,6 @@ def check_choice(choice):
         return "scissors"
 
 # function to compare user's choice with computer's choice
-
-
 def compare(user, comp):
     if user == comp:
         return "It's a draw!"
@@ -50,6 +48,8 @@ def compare(user, comp):
 
 # prompt the user to enter r/p/s
 rules()
+
+# runs until computer or user reaches a score of 3
 while userScore < 3 and compScore < 3:
 
     firstChoice = input("Rock, paper, scissors... ")
@@ -72,7 +72,8 @@ while userScore < 3 and compScore < 3:
 
     # compare the computer's choice with the user's choice
     status = compare(userChoice, compChoice)
-
+    
+    # alter scores based on status returned by compare function (may be able to be a function - but issues caused by local/global in first attempt)
     if status == "You win!":
         userScore += 1
     elif status == "The Computer wins!":
