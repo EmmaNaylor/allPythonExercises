@@ -50,7 +50,7 @@ def scores(onthedoors):
     global compScore
     if onthedoors == "You win!":
         userScore += 1
-    elif status == "The Computer wins!":
+    elif onthedoors == "The Computer wins!":
         compScore += 1
     return userScore, compScore
 
