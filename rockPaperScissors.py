@@ -45,6 +45,21 @@ def compare(user, comp):
             else:
                 return "The Computer wins!"
 
+def scores(onthedoors):
+    global userScore
+    global compScore
+    if onthedoors == "You win!":
+        userScore += 1
+    elif status == "The Computer wins!":
+        compScore += 1
+    return userScore, compScore
+
+def winner():
+    if userScore > compScore:
+        print("You're the winner! Congratulations!")
+    else:
+        print("Oh dear you lose... looks like the computer got the best of you this time.")
+
 
 # prompt the user to enter r/p/s
 rules()
@@ -69,12 +84,12 @@ while userScore < 3 and compScore < 3:
     # compare the computer's choice with the user's choice
     status = compare(userChoice, compChoice)
 
-    # alter scores based on status returned by compare function (may be able to be a function - but issues caused by local/global in first attempt)
-    if status == "You win!":
-        userScore += 1
-    elif status == "The Computer wins!":
-        compScore += 1
+    # update the scores based on status returned by compare function (is global bad?)
+    scoreUpdate = scores(status)
 
     # display whether the user won/drew/lost against the computer
     print(f"You played: {userChoice} \nThe computer played: {compChoice}\n{status}")
     print(f"\nThe scores are:\nYour score: {userScore}\nComputer score: {compScore}\n")
+
+#display the winner
+winner()
