@@ -52,12 +52,8 @@ rules()
 # runs until computer or user reaches a score of 3
 while userScore < 3 and compScore < 3:
 
-    firstChoice = input("Rock, paper, scissors... ")
-    try:
-        yourChoice = firstChoice[0].lower()
-        if yourChoice not in options:
-            print("I didn't recognise that entry... please try again ")
-    except IndexError:
+    yourChoice = input("Rock, paper, scissors... ")
+    if yourChoice not in options:
         print("please enter 'r', 'p' or 's' to play")
         continue
 
@@ -72,7 +68,7 @@ while userScore < 3 and compScore < 3:
 
     # compare the computer's choice with the user's choice
     status = compare(userChoice, compChoice)
-    
+
     # alter scores based on status returned by compare function (may be able to be a function - but issues caused by local/global in first attempt)
     if status == "You win!":
         userScore += 1
