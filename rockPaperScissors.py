@@ -2,17 +2,24 @@ import random
 
 scores = [0, 0]
 options = ["r", "p", "s"]
-yourChoice = ""
-userChoice = ""
 compChoice = ""
+rulesDict = {"rock": "smashes scissors", "paper": "wraps rock", "scissors": "cut paper"}
 
 
 # function to call rules of the game
 def rules():
     print("""You are playing rock, paper scissors\n
     To play, please enter r for rock, p for paper or s for scissors
-    Remember: Rock smashes Scissors, Paper wraps Rock, Scissors cut Paper!
+    Remember: Rock smashes Scissors, Paper wraps Rock, Scissors cuts Paper!
     \n*****************************************************\n\n""")
+
+def user_choice(choices):
+    print("Rock, paper, scissors... ")
+    entry = ""
+    while entry not in choices:
+        entry = input("please enter 'r', 'p' or 's' to play ")
+    else:
+        return entry
 
 # function to convert single letter choice to full length choice
 def check_choice(choice):
@@ -47,9 +54,13 @@ def compare(user, comp):
 def scoring(onthedoors, whowon):
     if whowon == "You win!":
         onthedoors[0] = onthedoors[0]+1
+        print(f"You played: {choiceConfirm} \nThe computer played: {compChoice}\n{choiceConfirm.capitalize()} {rulesDict[choiceConfirm]}!\n{status}")
     elif whowon == "The Computer wins!":
         onthedoors[1] = onthedoors[1]+1
+        print(f"You played: {choiceConfirm} \nThe computer played: {compChoice}\n{compChoice.capitalize()} {rulesDict[compChoice]}!\n{status}")
+    print(f"\nThe scores are:\nYour score: {scores[0]}\nComputer score: {scores[1]}\n")
     return onthedoors
+
 
 def winner():
     if scores[0] > scores[1]:
@@ -62,15 +73,12 @@ def winner():
 rules()
 
 # runs until computer or user reaches a score of 3
-while scores[0] < 3 and scores[1] < 3:
+while scores[0] + scores[1] < 3:
 
-    yourChoice = input("Rock, paper, scissors... ")
-    if yourChoice not in options:
-        print("please enter 'r', 'p' or 's' to play")
-        continue
+    yourChoice = user_choice(choices=options)
 
     # convert the value into rock/paper/scissors respectively
-    userChoice = check_choice(yourChoice)
+    choiceConfirm = check_choice(yourChoice)
 
     # ask computer to generate a random int between 0-3
     compNum = random.choice(options)
@@ -79,14 +87,12 @@ while scores[0] < 3 and scores[1] < 3:
     compChoice = check_choice(compNum)
 
     # compare the computer's choice with the user's choice
-    status = compare(userChoice, compChoice)
+    status = compare(user=choiceConfirm, comp=compChoice)
 
-    # update the scores based on status returned by compare function (is global bad?)
+    # update the scores based on status returned by compare function
+    # display whether the user won/drew/lost against the computer
     scoreUpdate = scoring(onthedoors=scores, whowon=status)
 
-    # display whether the user won/drew/lost against the computer
-    print(f"You played: {userChoice} \nThe computer played: {compChoice}\n{status}")
-    print(f"\nThe scores are:\nYour score: {scores[0]}\nComputer score: {scores[1]}\n")
 
 #display the winner
 winner()
