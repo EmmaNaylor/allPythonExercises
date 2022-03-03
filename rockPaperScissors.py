@@ -1,7 +1,6 @@
 import random
 
-userScore = 0
-compScore = 0
+scores = [0, 0]
 options = ["r", "p", "s"]
 yourChoice = ""
 userChoice = ""
@@ -45,17 +44,15 @@ def compare(user, comp):
             else:
                 return "The Computer wins!"
 
-def scores(onthedoors):
-    global userScore
-    global compScore
-    if onthedoors == "You win!":
-        userScore += 1
-    elif onthedoors == "The Computer wins!":
-        compScore += 1
-    return userScore, compScore
+def scoring(onthedoors, whowon):
+    if whowon == "You win!":
+        onthedoors[0] = onthedoors[0]+1
+    elif whowon == "The Computer wins!":
+        onthedoors[1] = onthedoors[1]+1
+    return onthedoors
 
 def winner():
-    if userScore > compScore:
+    if scores[0] > scores[1]:
         print("You're the winner! Congratulations!")
     else:
         print("Oh dear you lose... looks like the computer got the best of you this time.")
@@ -65,7 +62,7 @@ def winner():
 rules()
 
 # runs until computer or user reaches a score of 3
-while userScore < 3 and compScore < 3:
+while scores[0] < 3 and scores[1] < 3:
 
     yourChoice = input("Rock, paper, scissors... ")
     if yourChoice not in options:
@@ -85,11 +82,11 @@ while userScore < 3 and compScore < 3:
     status = compare(userChoice, compChoice)
 
     # update the scores based on status returned by compare function (is global bad?)
-    scoreUpdate = scores(status)
+    scoreUpdate = scoring(onthedoors=scores, whowon=status)
 
     # display whether the user won/drew/lost against the computer
     print(f"You played: {userChoice} \nThe computer played: {compChoice}\n{status}")
-    print(f"\nThe scores are:\nYour score: {userScore}\nComputer score: {compScore}\n")
+    print(f"\nThe scores are:\nYour score: {scores[0]}\nComputer score: {scores[1]}\n")
 
 #display the winner
 winner()
