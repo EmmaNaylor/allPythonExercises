@@ -1,57 +1,37 @@
 print("Welcome to the calculator app!\n")
 
-confirm = ""
-gameOver = False
+allowableChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "+", "-", "/", "*"]
+sumString = []
+addSpace = []
 
-while confirm.lower() != "yes":
-
-    yourSum = None
-    allowableChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "+", "-", "/", "*"]
-    sumString = []
-
-    while not yourSum:
-        yourSum = input("Please enter your sum: ")
-        if not yourSum:
-            print("You haven't entered anything... please try again.")
-
-    for char in yourSum:
+def check_allowable(entry):
+    for char in entry:
         if char in allowableChars:
             sumString.append(char)
             continue
         else:
-            print("Sorry I didn't recognise one or more of your characters...")
-            print("Please only use numbers or the following operators +, -, *, /")
-            gameOver = True
-            break
-    if gameOver is True:
-        break
-    else:
-        print(f"You asked me to calculate... {yourSum}")
-        confirm = input("... Is that right? ")
-        if confirm.lower() != "yes":
-            print("Okay no problem, let's start again")
-            gameOver = True
+            print("""Sorry I didn't recognise one or more of your characters...
+            Please only use numbers or the following operators +, -, *, /""")
             break
 
-if gameOver is False:
-    for char in yourSum:
+
+def add_spaces(checkedsum):
+    for char in checkedsum:
         if char == "/" or char == "*" or char == "+" or char == "-":
-            addSpace = yourSum.replace("/", " / ").replace("*", " * ").replace("+", " + ").replace("-", " - ")
+            new_list = yourSum.replace("/", " / ").replace("*", " * ").replace("+", " + ").replace("-", " - ")
         else:
             continue
 
-if gameOver is False:
-    try:
-        sumList = addSpace.split(" ")
-        print(sumList)
-    except NameError:
-        print("Looks like you haven't entered a valid operator. Please enter a new sum")
-        gameOver = True
-    if sumList[-1] == "":
-        sumList.pop()
-    if sumList[-1] == "/" or sumList[-1] == "*" or sumList[-1] == "+" or sumList[-1] == "-":
-        sumList.pop()
-        print(sumList)
+yourSum = input("Please enter your sum: ")
+if not yourSum:
+    print("You haven't entered anything... please try again.")
+
+check_allowable(yourSum)
+spacedList = add_spaces(yourSum)
+print(sumString)
+print(spacedList)
+
+
 
 
 
