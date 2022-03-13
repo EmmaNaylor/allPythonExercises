@@ -6,7 +6,7 @@ class Employee(Person):
     def __init__(self, name, gender, age, role, shift):
         Person.__init__(self, name, gender, age)
         self._role = role
-        self._shift = shift
+        self.shift = shift
 
     def state_role(self):
         print(f"I am a {self._role}")
@@ -19,12 +19,12 @@ class Employee(Person):
         print(f"I have been working here for around {sl} years")
 
     def hours(self):
-        print(f"I work {self._shift}")
+        print(f"I work {self.shift}")
 
     def on_duty(self):
         from check_time import check_shift
         hours = check_shift()
-        if hours == self._shift:
+        if hours == self.shift:
             print("I'm on duty")
         else:
             print("Sorry I'm off duty, I can't help you right now")

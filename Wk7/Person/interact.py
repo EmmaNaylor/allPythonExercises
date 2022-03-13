@@ -7,8 +7,12 @@ print(staff1)
 staff1.introduce()
 staff1.length_of_service()
 staff1.tasks()
-staff1.state_age()
-staff1.introduce()
+age = staff1.age
+staff1.nick_name = "Sal"
+print(staff1)
+
+
+
 print("******************************************")
 
 staff2 = Employee("Fred", "male", 19, "checkout worker", "days")
@@ -23,7 +27,7 @@ staff3 = Employee("Andy", "male", 56, "customer service assistant", "evenings")
 print(staff3)
 staff3.length_of_service()
 staff3.tasks()
-staff3.walk()
+staff3.breathe()
 staff3.hours()
 staff3.on_duty()
 print("******************************************")
@@ -31,7 +35,7 @@ print("******************************************")
 cust1 = Customer("George", "male", 21, "buy", "socks")
 print(cust1)
 cust1.introduce()
-cust1.walk()
+cust1.breathe()
 cust1.state_age()
 cust1.state_gender()
 cust1.ask_for_help()
