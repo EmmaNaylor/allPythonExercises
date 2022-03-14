@@ -12,11 +12,20 @@ class Employee(Person):
         print(f"I am a {self._role}")
 
     def __len__(self):
-        return self._age - 18
+        try:
+            test = self._age + 1
+            return self._age - 18
+        except TypeError:
+            print("------------ :( --------------")
+            print(f"Oops, something went wrong when you called: len(self). "
+                  f"Please enter {self._name}'s age as a number.")
 
     def length_of_service(self):
-        sl = len(self)
-        print(f"I have been working here for around {sl} years")
+        try:
+            sl = len(self)
+            print(f"I have been working here for around {sl} years")
+        except TypeError as err:
+            print("The error was captured as:", err)
 
     def hours(self):
         print(f"I work {self.shift}")
@@ -28,7 +37,6 @@ class Employee(Person):
             print("I'm on duty")
         else:
             print("Sorry I'm off duty, I can't help you right now")
-
 
     def tasks(self):
 
@@ -42,8 +50,7 @@ class Employee(Person):
             skills = ("help with whatever you need",)
         else:
             skills = ""
-        print("I can " + (' and '.join(x for x in skills)))
+        print("I can " + (' and '.join(skill for skill in skills)))
 
     def __str__(self):
         return f"Hi! My name's {self._name}, I'm a {self._role}"
-

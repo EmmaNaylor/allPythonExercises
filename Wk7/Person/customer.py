@@ -1,4 +1,5 @@
 from person import Person
+from random import randint
 
 
 class Customer(Person):
@@ -21,5 +22,14 @@ class Customer(Person):
         else:
             print("Looks like I came to the wrong place...")
 
+    def browse(self):
+        for i in range(0, 3):
+            print("I am browsing")
+        print("I always browse thrice in case of items hidden at the back...")
 
+    def __len__(self):
+        return randint(2, 61)
 
+    def length_of_wait(self):
+        wait = len(self)
+        print(f"I have been waiting here for {wait} minutes! Please can I get some service!")

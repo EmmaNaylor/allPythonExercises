@@ -15,7 +15,12 @@ class Person:
         print(f"I am {self._gender}")
 
     def state_age(self):
-        print(f"I am {self._age} years old")
+        try:
+            self._age + 1
+        except TypeError as err:
+            print("------------ :( --------------")
+            print(f"Oops, something went wrong when you called: state_age(self). "
+                  f"Please enter {self._name}'s age as a number. The error was captured as: {err}")
 
     def breathe(self):
         print("I am breathing")
