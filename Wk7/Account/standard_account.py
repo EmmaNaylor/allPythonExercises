@@ -1,6 +1,4 @@
-class InsufficientFundsException(Exception):
-    pass
-
+from insufficient_funds import InsufficientFundsException
 
 class Account:
 
@@ -8,19 +6,32 @@ class Account:
         self._balance = funds
 
     def check_balance(self):
-        print(f"Your balance is: £{self._balance}")
-        return self._balance
+        try:
+            check_bal_test = self._balance / 2
+        except TypeError as exc:
+            print("Oops! This script takes only numbers! check_balance() failed!\n"
+                  "Error captured as:", exc)
+        else:
+            print(f"Your balance is: £{self._balance}")
+            return self._balance
 
     def deposit(self, amount):
-        self._balance += amount
+        try:
+            self._balance += amount
+        except TypeError as exc:
+            print("Oops! This script takes only numbers! Deposit() failed!\n"
+                  "Error captured as:", exc)
 
     def withdraw(self, amount):
         try:
             self._balance -= amount
+        except TypeError as exc:
+            print("Oops! This script takes only numbers! withdraw() failed!\n"
+                  "Error captured as:", exc)
+        else:
             if self._balance < 0:
                 self._balance += amount
-                raise InsufficientFundsException("You have insufficient funds to withdraw that amount")
-        except InsufficientFundsException as err:
-            print("Oops:", err)
+                raise InsufficientFundsException(f"You tried to withdraw £{amount} but you have insufficient funds to withdraw that amount")
+
 
 
