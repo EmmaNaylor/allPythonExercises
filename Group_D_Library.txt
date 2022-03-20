@@ -1,0 +1,54 @@
+show databases;
+
+create database if not exists group_D_library;
+
+use group_D_library;
+
+create table LIBRARY_MEMBERS (
+        USER_ID smallint not null primary key AUTO_INCREMENT,
+        FIRSTNAME varchar(35) not null,
+        LASTNAME varchar(35) not null,
+        ADDRESS smallint,
+        PERSONAL_DETAILS smallint);
+	
+create table ADDRESS (
+        ID smallint not null primary key AUTO_INCREMENT,
+        PERSON_ID smallint not null,
+        FIRST_LINE varchar(100) not null,
+        SECOND_LINE varchar(100),
+        TOWN varchar(35) not null,
+        POSTCODE varchar(8) not null,
+        PHONE varchar(11),
+        EMAIL varchar(100),
+        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(USER_ID));
+        
+create table PERSONAL_DETAILS (
+        ID smallint not null primary key AUTO_INCREMENT,
+        PERSON_ID smallint not null,
+        DOB date not null,
+        USER_CAT enum("Staff", "Child", "Adult"),
+        GENDER varchar(35),
+        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(USER_ID));
+        
+create table BOOKS (
+        ID smallint not null primary key AUTO_INCREMENT,
+        BOOK_TITLE varchar(200) not null,
+        AUTHOR varchar(200) not null,
+		GENRE enum("Romance", "Crime", "Travel", "Young Adult", "Adventure", "Fantasy", "Sci-fi", "Mystery"),
+        FORM enum("Fiction", "Non-Fiction"),
+        COMPOSITION enum("Paper", "Electronic"),
+        CHECK_OUT_STATUS enum("In", "Out") DEFAULT "In",
+        RELEASE_DATE date);
+        
+create table LOANS (
+        ID smallint not null primary key AUTO_INCREMENT,
+        PERSON_ID smallint not null,
+        BOOK_ID smallint,
+        LOAN_DATE timestamp,
+        RETURN_DATE date,
+        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(USER_ID),
+        FOREIGN KEY (BOOK_ID) references BOOKS(ID));
+        
+alter table LIBRARY_MEMBERS
+ADD FOREIGN KEY (ADDRESS) references ADDRESS(ID),
+ADD FOREIGN KEY (PERSONAL_DETAILS) references PERSONAL_DETAILS(ID);
