@@ -5,50 +5,53 @@ create database if not exists group_D_library;
 use group_D_library;
 
 create table LIBRARY_MEMBERS (
-        USER_ID smallint not null primary key AUTO_INCREMENT,
+			ID smallint not null primary key AUTO_INCREMENT,
         FIRSTNAME varchar(35) not null,
         LASTNAME varchar(35) not null,
-        ADDRESS smallint,
+        ADDRESS smallint not null,
         PERSONAL_DETAILS smallint);
 	
 create table ADDRESS (
-        ID smallint not null primary key AUTO_INCREMENT,
-        PERSON_ID smallint not null,
+			ID smallint not null primary key AUTO_INCREMENT,
         FIRST_LINE varchar(100) not null,
         SECOND_LINE varchar(100),
         TOWN varchar(35) not null,
         POSTCODE varchar(8) not null,
         PHONE varchar(11),
-        EMAIL varchar(100),
-        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(USER_ID));
+        EMAIL varchar(100));
         
 create table PERSONAL_DETAILS (
-        ID smallint not null primary key AUTO_INCREMENT,
+			ID smallint not null primary key AUTO_INCREMENT,
         PERSON_ID smallint not null,
         DOB date not null,
-        USER_CAT enum("Staff", "Child", "Adult"),
-        GENDER varchar(35),
-        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(USER_ID));
+        USER_CAT enum("Staff", "Child", "Adult") not null,
+        GENDER varchar(35));
+        
+create table GENRE (
+			ID tinyint not null primary key AUTO_INCREMENT,
+        GENRE enum("Romance", "Crime", "Travel", "Young Adult", "Adventure", "Fantasy", "Sci-fi", "Mystery") not null);      
         
 create table BOOKS (
-        ID smallint not null primary key AUTO_INCREMENT,
+			ID smallint not null primary key AUTO_INCREMENT,
         BOOK_TITLE varchar(200) not null,
         AUTHOR varchar(200) not null,
-		GENRE enum("Romance", "Crime", "Travel", "Young Adult", "Adventure", "Fantasy", "Sci-fi", "Mystery"),
+		GENRES tinyint not null,
         FORM enum("Fiction", "Non-Fiction"),
         COMPOSITION enum("Paper", "Electronic"),
         CHECK_OUT_STATUS enum("In", "Out") DEFAULT "In",
-        RELEASE_DATE date);
-        
-create table LOANS (
-        ID smallint not null primary key AUTO_INCREMENT,
-        PERSON_ID smallint not null,
-        BOOK_ID smallint,
-        LOAN_DATE timestamp,
-        RETURN_DATE date,
-        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(USER_ID),
-        FOREIGN KEY (BOOK_ID) references BOOKS(ID));
+        RELEASE_DATE date,
+        FOREIGN KEY(GENRES) references GENRE(ID));
         
 alter table LIBRARY_MEMBERS
 ADD FOREIGN KEY (ADDRESS) references ADDRESS(ID),
 ADD FOREIGN KEY (PERSONAL_DETAILS) references PERSONAL_DETAILS(ID);
+        
+create table LOANS (
+			ID smallint not null primary key AUTO_INCREMENT,
+        PERSON_ID smallint not null,
+        BOOK_ID smallint not null,
+        LOAN_DATE datetime,
+        RETURN_DATE date,
+        FOREIGN KEY (PERSON_ID) references LIBRARY_MEMBERS(ID),
+        FOREIGN KEY (BOOK_ID) references BOOKS(ID));
+        
